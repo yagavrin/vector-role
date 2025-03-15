@@ -1,0 +1,3 @@
+---
+
+vector_log_path: "/var/log/myapp/*.log"
