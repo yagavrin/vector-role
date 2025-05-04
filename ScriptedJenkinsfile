@@ -1,0 +1,24 @@
+node {
+    parameters {
+        booleanParam(
+            name: 'prod_run',
+            defaultValue: false,
+            description: 'Запустить в production режиме (без --check --diff)'
+        )
+    }
+    
+    
+    stage("Git checkout"){
+        git url: 'https://github.com/aragastmatb/example-playbook.git', branch: 'master'
+    }
+    
+    stage("Run playbook"){
+        if (params.prod_run){
+            sh 'ansible-playbook site.yml -i inventory/prod.yml'
+        }
+        else{
+            sh 'ansible-playbook --check --diff site.yml -i inventory/prod.yml'
+        }
+        
+    }
+}
